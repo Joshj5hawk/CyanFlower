@@ -1,0 +1,16 @@
+[
+{
+  "modid": "cyanflower",
+  "name": "Cyan Flower",
+  "description": "A mod that adds a cyan flower to world gen!",
+  "version": "0.1",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["JoshJ5Hawk"],
+  "credits": "Code: JoshJ5Hawk",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
