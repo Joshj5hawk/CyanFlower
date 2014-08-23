@@ -1,19 +1,20 @@
 package com.joshj5hawk.blocks;
 
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.common.EnumPlantType.Plains;
 
 import com.joshj5hawk.lib.Strings;
-import com.joshj5hawk.main.CyanFlower;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -31,20 +32,40 @@ public class BlockCyanFlower extends Block implements IPlantable
 		this.setBlockBounds(0.5F -f, 0.0F, 0.5F - f, 0.5F + f, f*3.0F, 0.5F + f);
 	}
 	
-	public boolean canPlaceBolckAt(World world, int x, int y, int z)
-	{
-		return super.canPlaceBlockAt(world, x, y, z) && this.canBlockStay(world, x, y, z);
-	}
-	
-	public boolean canBlockStay(World world, int x, int y, int z)
-	{
-		return world.getBlock(x, y -1 , z).canSustainPlant(world, x, y-1, z, ForgeDirection.UP, this);
-	}
-	
-	protected boolean canPlaceBlockOn(Block block)
-	{
-		return block == Blocks.grass || block == Blocks.dirt || block == Blocks.farmland;
-	}
+   public boolean canPlaceBlockAt(World world, int x, int y, int z)
+   {
+       return super.canPlaceBlockAt(world, x, y, z) && this.canBlockStay(world, x, y, z);
+   }
+   
+   protected boolean canPlaceBlockOn(Block block)
+   {
+       return block == Blocks.grass || block == Blocks.dirt || block == Blocks.farmland;
+   }
+
+   public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
+   {
+       super.onNeighborBlockChange(world, x, y, z, block);
+       this.checkAndDropBlock(world, x, y, z);
+   }
+   
+   public void updateTick(World world, int x, int y, int z, Random random)
+   {
+       this.checkAndDropBlock(world, x, y, z);
+   }
+   
+   protected void checkAndDropBlock(World world, int x, int y, int z)
+   {
+       if (!this.canBlockStay(world, x, y, z))
+       {
+           this.dropBlockAsItem(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
+           world.setBlock(x, y, z, getBlockById(0), 0, 2);
+       }
+   }
+
+   public boolean canBlockStay(World world, int x, int y, int z)
+   {
+       return  world.getBlock(x, y - 1, z).canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, this);
+   }
 	
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iconRegister)
@@ -75,22 +96,30 @@ public class BlockCyanFlower extends Block implements IPlantable
 	{
 		return 1;
 	}
+	
+	public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z)
+	{
+	return null;
+	}
+
 
 	@Override
 	public EnumPlantType getPlantType(IBlockAccess world, int x, int y, int z) 
 	{
-		if (this == CyanFlower.blockCyanFlower)		return Plains;
+		return EnumPlantType.Plains;
 	}
 
+
 	@Override
-	public Block getPlant(IBlockAccess world, int x, int y, int z) {
-		// TODO Auto-generated method stub
+	public Block getPlant(IBlockAccess world, int x, int y, int z) 
+	{
 		return null;
 	}
 
+
 	@Override
-	public int getPlantMetadata(IBlockAccess world, int x, int y, int z) {
-		// TODO Auto-generated method stub
+	public int getPlantMetadata(IBlockAccess world, int x, int y, int z) 
+	{
 		return 0;
 	}
 }

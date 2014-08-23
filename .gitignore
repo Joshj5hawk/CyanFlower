@@ -6,6 +6,13 @@
 /build
 /eclipse
 /bin
+/config
+/logs
+/mods
+/resourcepacks
+/saves
+*.gz
+options.txt
 
 *.mtl
 *.classpath

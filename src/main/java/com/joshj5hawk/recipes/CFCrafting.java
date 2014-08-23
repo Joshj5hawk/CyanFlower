@@ -10,7 +10,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class CFCrafting 
 {
 
-	public static void nainRegistry()
+	public static void mainRegistry()
 	{
 		shapedRecipes();
 		shapelessRecipes();
@@ -18,7 +18,7 @@ public class CFCrafting
 
 	public static void shapelessRecipes() 
 	{
-		GameRegistry.addShapelessRecipe(new ItemStack(Items.dye, 2, 6), new ItemStack(CyanFlower.blockCyanFlower));
+		GameRegistry.addRecipe(new ItemStack(Items.dye, 2, 6), new Object[]{"X", 'X', CyanFlower.blockCyanFlower});
 	}
 
 	public static void shapedRecipes() 

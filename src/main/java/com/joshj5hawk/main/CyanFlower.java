@@ -7,6 +7,7 @@ import net.minecraft.creativetab.CreativeTabs;
 
 import com.joshj5hawk.blocks.BlockCyanFlower;
 import com.joshj5hawk.lib.Strings;
+import com.joshj5hawk.recipes.CFCrafting;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -31,12 +32,12 @@ public class CyanFlower
 	@EventHandler
 	public void Init(FMLInitializationEvent init)
 	{
-		
+		CFCrafting.mainRegistry();
 	}
 	
 	@EventHandler
 	public void PostInit(FMLPostInitializationEvent postInit)
 	{
-		System.out.println("Cyan Flower" + Strings.version + "Loaded");
+		System.out.println("Cyan Flower-" + Strings.version + " Loaded");
 	}
 }
